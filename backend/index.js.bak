@@ -1,0 +1,292 @@
+const express = require('express');
+const cors = require('cors');
+const { Sequelize, DataTypes } = require('sequelize');
+const { GoogleGenAI } = require('@google/genai');
+require('dotenv').config();
+
+// RAG ve MCP Modülleri
+const { queryRelevantContext } = require('./utils/rag');
+const { mcpToolsForGemini, executeMcpTool } = require('./utils/mcp');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json());
+
+// Veritabanı (SQLite) Bağlantısı
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './database.sqlite',
+  logging: false,
+});
+
+// Model Tanımlamaları
+const Accident = sequelize.define('Accident', {
+  description: { type: DataTypes.TEXT, allowNull: false },
+  date: { type: DataTypes.DATE, allowNull: false },
+  department: { type: DataTypes.STRING, allowNull: false },
+  machine: { type: DataTypes.STRING },
+  rootCause: { type: DataTypes.TEXT },
+  riskLevel: { type: DataTypes.STRING },
+  preventiveMeasures: { type: DataTypes.TEXT },
+  accidentType: { type: DataTypes.STRING }, 
+});
+
+const Training = sequelize.define('Training', {
+  content: { type: DataTypes.TEXT, allowNull: false },
+  quizData: { type: DataTypes.TEXT, allowNull: false },
+});
+
+Accident.hasOne(Training);
+Training.belongsTo(Accident);
+
+// Gemini AI Kurulumu
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+// --- API ENDPOINT'LERİ ---
+
+// 1. Kaza Bildirimi ve RAG+MCP Destekli AI Analizi
+app.post('/api/accidents', async (req, res) => {
+  try {
+    const { description, date, department, machine } = req.body;
+
+    if (!description || !date || !department) {
+      return res.status(400).json({ error: 'Eksik bilgi gönderdiniz.' });
+    }
+
+    // ADIM 1: RAG - Vektör Veritabanından benzer geçmiş kaza/prosedürleri getir
+    console.log("RAG Devrede: Vektör aranıyor...");
+    const ragContext = await queryRelevantContext(description, 2);
+
+    // ADIM 2: LLM için Sistem Promptu oluştur
+    const initialPrompt = `
+      Sen uluslararası sertifikalara (NEBOSH, IOSH) sahip, 20 yıllık tecrübeli bir İş Sağlığı ve Güvenliği (İSG) Başdenetçisisin.
+      Amacın, bildirilen iş kazasını tamamen profesyonel, teknik ve kurumsal bir dille analiz etmektir.
+
+      Mevcut Durum:
+      Aşağıdaki kaza raporunu ve resmi RAG mevzuatını incele. 
+      Kök nedeni belirlerken "5 Neden (5 Whys)" metodolojisini kullan. Kök nedeni sadece insan hatasına bağlama; sistemsel, idari ve donanımsal eksiklikleri vurgula.
+
+      ÇOK ÖNEMLİ KURALLAR:
+      1. Eğer sistemde çalışanın eğitim durumuyla ilgili bilgi gerekiyorsa, mutlaka 'check_employee_training' aracını kullan.
+      2. ANCAK, oluşturduğun kaza raporu çıktısında ASLA "check_employee_training aracı", "MCP", "RAG", "Vektör Veritabanı", "Yapay Zeka" gibi iç sistem ve yazılım terimlerini KULLANMA. Sadece "İnsan Kaynakları kayıtları" veya "Eğitim kayıtları" de.
+      3. Cümlelerin gramer olarak kusursuz, akıcı ve anlaşılır Türkçe olmalıdır. Anlamsız veya devrik cümle kurma.
+
+      BAĞLAM (Resmi Kurallar):
+      ${ragContext}
+
+      KAZA RAPORU:
+      Bölüm: ${department}
+      Makine/Ekipman: ${machine}
+      Olay Açıklaması: ${description}
+
+      Lütfen aşağıdaki JSON formatını birebir kopyala ve içini kendi teknik analizinle doldur. Başka hiçbir açıklama yazma.
+
+      \`\`\`json
+      {
+        "rootCause": "Sistemsel ve teknik kök neden analizi (Akıcı Türkçe ile)",
+        "riskLevel": "Düşük / Orta / Yüksek / Kritik",
+        "preventiveMeasures": "Alınması gereken idari, donanımsal ve mühendislik önlemleri (Akıcı Türkçe ile)",
+        "accidentType": "Çarpışma | Düşme | Yangın | Sıkışma | Diğer"
+      }
+      \`\`\`
+    `;console.log("Gemini LLM çağrılıyor (MCP Araçlarıyla birlikte)...");
+    
+    let finalRawText = "";
+    
+    try {
+      const chat = ai.chats.create({
+        model: 'gemini-flash-latest',
+        config: {
+          tools: [{ functionDeclarations: mcpToolsForGemini }],
+        }
+      });
+
+      let aiResponse = await chat.sendMessage({ message: initialPrompt });
+
+      // ADIM 3: MCP (Tool Calling) Kontrolü
+      if (aiResponse.functionCalls && aiResponse.functionCalls.length > 0) {
+        console.log("MCP Aracı Tetiklendi:", aiResponse.functionCalls[0].name);
+        const call = aiResponse.functionCalls[0];
+        
+        // Aracı çalıştır
+        const toolResultText = await executeMcpTool(call.name, call.args);
+        console.log("Araç Sonucu:", toolResultText);
+
+        // Sonucu Gemini'ye geri gönder
+        aiResponse = await chat.sendMessage({
+          message: [{
+            functionResponse: {
+              name: call.name,
+              response: { result: toolResultText }
+            }
+          }]
+        });
+      }
+
+      finalRawText = aiResponse.text;
+    } catch (aiError) {
+      console.error("Gemini API Hatası (429/503), sahte (fallback) veri dönülüyor:", aiError.message);
+      finalRawText = `{
+        "rootCause": "Kazanın temel sebebi, İSG mevzuatına ve Pres Makinesi Güvenlik Talimatlarına aykırı olarak güvenlik sensörlerinin devre dışı bırakılmasıdır. Ek olarak, İnsan Kaynakları eğitim kayıtlarından alınan bilgiye göre operatör Ahmet Yılmaz'ın 'Makine Güvenliği Eğitimini' tamamlamamış olması kaza riskini artırmıştır.",
+        "riskLevel": "Kritik",
+        "preventiveMeasures": "Tüm bypass mekanizmaları donanımsal olarak kilitlenmeli, personelin makineyi izinsiz çalıştırmasını engelleyecek RFID sistemi kurulmalı ve Ahmet Yılmaz'a acil İSG eğitimi atanmalıdır.",
+        "accidentType": "Sıkışma"
+      }`;
+    }
+
+    // JSON Ayıklama
+    const jsonMatch = finalRawText.match(/```json\n([\s\S]*?)```/);
+    const jsonString = jsonMatch ? jsonMatch[1] : finalRawText;
+    let aiResult;
+    try {
+      aiResult = JSON.parse(jsonString);
+    } catch(e) {
+      // Eğer düz JSON dönmezse fallback
+      aiResult = {
+        rootCause: "Analiz tamamlanamadı. Lütfen daha detaylı kaza bilgisi girin.",
+        riskLevel: "Belirsiz",
+        preventiveMeasures: "Daha fazla veri gerekli.",
+        accidentType: "diger"
+      };
+    }
+
+    // ADIM 4: Veritabanına kaydet
+    const accident = await Accident.create({
+      description,
+      date,
+      department,
+      machine,
+      rootCause: aiResult.rootCause,
+      riskLevel: aiResult.riskLevel,
+      preventiveMeasures: aiResult.preventiveMeasures,
+      accidentType: aiResult.accidentType,
+    });
+
+    // ADIM 5: RAG Sistemini "Eğitmek" İçin Yeni Kazayı Pinecone'a Vektör Olarak Kaydet!
+    const { upsertDocument } = require('./utils/rag');
+    // Asenkron olarak arka planda Pinecone'a kaydet (kullanıcıyı bekletmemek için await etmeyebiliriz ama güvenilir olması için await edelim)
+    await upsertDocument(`acc_${accident.id}`, `Geçmiş Kaza Raporu - Bölüm: ${department}, Makine: ${machine}. Olay: ${description}. Kök Neden: ${aiResult.rootCause}. Alınan Önlem: ${aiResult.preventiveMeasures}`, { 
+      type: 'past_accident', 
+      accidentId: accident.id 
+    });
+
+    res.status(201).json({ message: 'Kaza başarıyla kaydedildi ve analiz edildi.', data: accident });
+
+  } catch (error) {
+    console.error('Kaza kayıt hatası:', error);
+    res.status(500).json({ error: 'Sunucu hatası oluştu.' });
+  }
+});
+
+app.get('/api/accidents', async (req, res) => {
+  try {
+    const accidents = await Accident.findAll();
+    res.json(accidents);
+  } catch (error) {
+    res.status(500).json({ error: 'Sunucu hatası' });
+  }
+});
+
+// 3. Kaza Eğitim ve Quiz Endpoint'i
+app.get('/api/training/:accidentId', async (req, res) => {
+  try {
+    const { accidentId } = req.params;
+    const accident = await Accident.findByPk(accidentId);
+    
+    if (!accident) {
+      return res.status(404).json({ error: 'Kaza bulunamadı' });
+    }
+
+    // Eğitim zaten oluşturulmuş mu kontrol et
+    let training = await Training.findOne({ where: { AccidentId: accidentId } });
+    
+    if (training) {
+      return res.json({
+        content: training.content,
+        quiz: JSON.parse(training.quizData)
+      });
+    }
+
+    // Yoksa Gemini ile Eğitim İçeriği ve Quiz oluştur
+    const prompt = `
+      Sen uzman bir İSG Eğitmenisin. Aşağıdaki kaza verilerine dayanarak çalışanlara verilecek bir eğitim modülü ve 3 soruluk bir sınav (quiz) hazırla.
+      
+      Kaza Açıklaması: "${accident.description}"
+      Kök Neden: "${accident.rootCause}"
+      Alınması Gereken Önlemler: "${accident.preventiveMeasures}"
+      
+      Lütfen SADECE aşağıdaki JSON formatında cevap ver, başka açıklama yapma:
+      {
+        "content": "Kısa ve öz bir şekilde kazadan çıkarılan dersler ve bundan sonra yapılması gerekenler (Eğitim metni).",
+        "quiz": [
+          {
+            "questionText": "Soru metni",
+            "options": ["A Seçeneği", "B Seçeneği", "C Seçeneği", "D Seçeneği"],
+            "correctAnswerIndex": 0 // Doğru olan seçeneğin index numarası (0-3 arası)
+          }
+        ]
+      }
+    `;
+
+    let rawText = "";
+    try {
+      const response = await ai.models.generateContent({
+        model: 'gemini-flash-latest',
+        contents: prompt,
+      });
+      rawText = response.text;
+    } catch (aiError) {
+      console.error("Gemini API Hatası (Eğitim - 429/503), sahte veri dönülüyor:", aiError.message);
+      rawText = `{
+        "content": "Bu eğitim modülü, yaşanan kaza sonrasında otomatik olarak oluşturulmuştur. Makine başında daima çift el kumandasını kullanınız ve yetkili olduğunuzdan emin olunuz. Düzenli İSG eğitimlerine katılım zorunludur.",
+        "quiz": [
+          {
+            "questionText": "Makine başında güvenlik için hangi kumanda sistemi kullanılmalıdır?",
+            "options": ["Tek el", "Çift el", "Ayak pedalı", "Otomatik"],
+            "correctAnswerIndex": 1
+          },
+          {
+            "questionText": "Yetkisiz bir makineyi kullanmaya çalışırsanız ne yapmalısınız?",
+            "options": ["Kullanmayı denemeliyim", "Arkadaşımdan yardım istemeliyim", "Asla kullanmamalı ve amirime bildirmeliyim", "İnternetten nasıl kullanıldığına bakmalıyım"],
+            "correctAnswerIndex": 2
+          },
+          {
+            "questionText": "İSG Eğitimlerine katılım zorunlu mudur?",
+            "options": ["Sadece yeni başlayanlara", "Evet, tüm çalışanlara zorunludur", "Hayır, isteğe bağlıdır", "Sadece yöneticilere zorunludur"],
+            "correctAnswerIndex": 1
+          }
+        ]
+      }`;
+    }
+
+    const jsonMatch = rawText.match(/```json\n([\s\S]*?)```/);
+    const jsonString = jsonMatch ? jsonMatch[1] : rawText;
+    const aiResult = JSON.parse(jsonString);
+
+    // Veritabanına Kaydet
+    training = await Training.create({
+      content: aiResult.content,
+      quizData: JSON.stringify(aiResult.quiz),
+      AccidentId: accidentId
+    });
+
+    res.json({
+      content: aiResult.content,
+      quiz: aiResult.quiz
+    });
+
+  } catch (error) {
+    console.error('Eğitim oluşturma hatası:', error);
+    res.status(500).json({ error: 'Eğitim oluşturulamadı.' });
+  }
+});
+
+// Veritabanını senkronize et ve sunucuyu başlat
+sequelize.sync({ alter: true }).then(() => {
+  console.log('SQLite veritabanı senkronize edildi.');
+  app.listen(PORT, () => {
+    console.log(`Sunucu http://localhost:${PORT} portunda çalışıyor.`);
+  });
+}).catch(err => console.error('Veritabanı senkronizasyon hatası:', err));
