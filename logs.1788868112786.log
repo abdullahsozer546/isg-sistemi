@@ -1,0 +1,211 @@
+2026-09-08T11:47:14.460423691Z [inf]  Starting Container
+2026-09-08T11:47:15.104311940Z [inf]  ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+2026-09-08T11:47:15.273939643Z [inf]  ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+2026-09-08T11:47:15.283973653Z [err]  /app/backend/node_modules/sequelize/lib/dialects/abstract/connection-manager.js:57
+2026-09-08T11:47:15.283977313Z [err]        throw err;
+2026-09-08T11:47:15.283980163Z [err]        ^
+2026-09-08T11:47:15.283982653Z [err]  
+2026-09-08T11:47:15.283982933Z [err]  Node.js v22.23.2
+2026-09-08T11:47:15.283984903Z [err]  Error: /lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.38' not found (required by /app/backend/node_modules/sqlite3/build/Release/node_sqlite3.node)
+2026-09-08T11:47:15.283987253Z [err]      at Object..node (node:internal/modules/cjs/loader:1939:18)
+2026-09-08T11:47:15.283989763Z [err]      at Module.load (node:internal/modules/cjs/loader:1505:32)
+2026-09-08T11:47:15.283992223Z [err]      at Function._load (node:internal/modules/cjs/loader:1309:12)
+2026-09-08T11:47:15.283994703Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+2026-09-08T11:47:15.283997033Z [err]      at Module.require (node:internal/modules/cjs/loader:1527:12)
+2026-09-08T11:47:15.283999433Z [err]      at require (node:internal/modules/helpers:147:16)
+2026-09-08T11:47:15.284002783Z [err]      at bindings (/app/backend/node_modules/bindings/bindings.js:112:48)
+2026-09-08T11:47:15.284005313Z [err]      at Object.<anonymous> (/app/backend/node_modules/sqlite3/lib/sqlite3-binding.js:1:37)
+2026-09-08T11:47:15.284007443Z [err]      at Module._compile (node:internal/modules/cjs/loader:1781:14)
+2026-09-08T11:47:15.284009893Z [err]      at Object..js (node:internal/modules/cjs/loader:1913:10) {
+2026-09-08T11:47:15.284012553Z [err]    code: 'ERR_DLOPEN_FAILED'
+2026-09-08T11:47:15.284014593Z [err]  }
+2026-09-08T11:47:15.284017353Z [err]  
+2026-09-08T11:47:15.819951933Z [inf]  ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+2026-09-08T11:47:15.944965537Z [err]  
+2026-09-08T11:47:15.944970027Z [err]  Node.js v22.23.2
+2026-09-08T11:47:15.944980607Z [inf]  ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+2026-09-08T11:47:15.944987097Z [err]  /app/backend/node_modules/sequelize/lib/dialects/abstract/connection-manager.js:57
+2026-09-08T11:47:15.944990487Z [err]        throw err;
+2026-09-08T11:47:15.944993277Z [err]        ^
+2026-09-08T11:47:15.944996207Z [err]  
+2026-09-08T11:47:15.944998876Z [err]  Error: /lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.38' not found (required by /app/backend/node_modules/sqlite3/build/Release/node_sqlite3.node)
+2026-09-08T11:47:15.945002256Z [err]      at Object..node (node:internal/modules/cjs/loader:1939:18)
+2026-09-08T11:47:15.945005046Z [err]      at Module.load (node:internal/modules/cjs/loader:1505:32)
+2026-09-08T11:47:15.945008606Z [err]      at Function._load (node:internal/modules/cjs/loader:1309:12)
+2026-09-08T11:47:15.945011716Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+2026-09-08T11:47:15.945014956Z [err]      at Module.require (node:internal/modules/cjs/loader:1527:12)
+2026-09-08T11:47:15.945017846Z [err]      at require (node:internal/modules/helpers:147:16)
+2026-09-08T11:47:15.945021366Z [err]      at bindings (/app/backend/node_modules/bindings/bindings.js:112:48)
+2026-09-08T11:47:15.945024136Z [err]      at Object.<anonymous> (/app/backend/node_modules/sqlite3/lib/sqlite3-binding.js:1:37)
+2026-09-08T11:47:15.945026816Z [err]      at Module._compile (node:internal/modules/cjs/loader:1781:14)
+2026-09-08T11:47:15.945029276Z [err]      at Object..js (node:internal/modules/cjs/loader:1913:10) {
+2026-09-08T11:47:15.945032106Z [err]    code: 'ERR_DLOPEN_FAILED'
+2026-09-08T11:47:15.945034946Z [err]  }
+2026-09-08T11:47:16.420931897Z [inf]  ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+2026-09-08T11:47:16.582847802Z [inf]  ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+2026-09-08T11:47:16.592472466Z [err]  /app/backend/node_modules/sequelize/lib/dialects/abstract/connection-manager.js:57
+2026-09-08T11:47:16.592482236Z [err]        throw err;
+2026-09-08T11:47:16.592488006Z [err]        ^
+2026-09-08T11:47:16.592492826Z [err]  
+2026-09-08T11:47:16.592499136Z [err]  Error: /lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.38' not found (required by /app/backend/node_modules/sqlite3/build/Release/node_sqlite3.node)
+2026-09-08T11:47:16.592504056Z [err]      at Object..node (node:internal/modules/cjs/loader:1939:18)
+2026-09-08T11:47:16.592508466Z [err]      at Module.load (node:internal/modules/cjs/loader:1505:32)
+2026-09-08T11:47:16.592513326Z [err]      at Function._load (node:internal/modules/cjs/loader:1309:12)
+2026-09-08T11:47:16.592517796Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+2026-09-08T11:47:16.592522096Z [err]      at Module.require (node:internal/modules/cjs/loader:1527:12)
+2026-09-08T11:47:16.592526876Z [err]      at require (node:internal/modules/helpers:147:16)
+2026-09-08T11:47:16.592531036Z [err]      at bindings (/app/backend/node_modules/bindings/bindings.js:112:48)
+2026-09-08T11:47:16.592535566Z [err]      at Object.<anonymous> (/app/backend/node_modules/sqlite3/lib/sqlite3-binding.js:1:37)
+2026-09-08T11:47:16.592538686Z [err]      at Module._compile (node:internal/modules/cjs/loader:1781:14)
+2026-09-08T11:47:16.592542255Z [err]      at Object..js (node:internal/modules/cjs/loader:1913:10) {
+2026-09-08T11:47:16.592546095Z [err]    code: 'ERR_DLOPEN_FAILED'
+2026-09-08T11:47:16.592550825Z [err]  }
+2026-09-08T11:47:16.592556145Z [err]  
+2026-09-08T11:47:16.592560055Z [err]  Node.js v22.23.2
+2026-09-08T11:47:17.047293682Z [inf]  ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+2026-09-08T11:47:17.243104326Z [err]  
+2026-09-08T11:47:17.243106326Z [inf]  ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+2026-09-08T11:47:17.243110906Z [err]  Node.js v22.23.2
+2026-09-08T11:47:17.243113406Z [err]  /app/backend/node_modules/sequelize/lib/dialects/abstract/connection-manager.js:57
+2026-09-08T11:47:17.243118466Z [err]        throw err;
+2026-09-08T11:47:17.243123396Z [err]        ^
+2026-09-08T11:47:17.243129195Z [err]  
+2026-09-08T11:47:17.243133585Z [err]      at Module.load (node:internal/modules/cjs/loader:1505:32)
+2026-09-08T11:47:17.243133605Z [err]      at Module._compile (node:internal/modules/cjs/loader:1781:14)
+2026-09-08T11:47:17.243138075Z [err]  Error: /lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.38' not found (required by /app/backend/node_modules/sqlite3/build/Release/node_sqlite3.node)
+2026-09-08T11:47:17.243144815Z [err]      at Object..node (node:internal/modules/cjs/loader:1939:18)
+2026-09-08T11:47:17.243145165Z [err]      at Function._load (node:internal/modules/cjs/loader:1309:12)
+2026-09-08T11:47:17.243151105Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+2026-09-08T11:47:17.243152715Z [err]      at Object..js (node:internal/modules/cjs/loader:1913:10) {
+2026-09-08T11:47:17.243155105Z [err]      at Module.require (node:internal/modules/cjs/loader:1527:12)
+2026-09-08T11:47:17.243159055Z [err]    code: 'ERR_DLOPEN_FAILED'
+2026-09-08T11:47:17.243159625Z [err]      at require (node:internal/modules/helpers:147:16)
+2026-09-08T11:47:17.243163165Z [err]  }
+2026-09-08T11:47:17.243164015Z [err]      at bindings (/app/backend/node_modules/bindings/bindings.js:112:48)
+2026-09-08T11:47:17.243167855Z [err]      at Object.<anonymous> (/app/backend/node_modules/sqlite3/lib/sqlite3-binding.js:1:37)
+2026-09-08T11:47:17.704715553Z [inf]  ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+2026-09-08T11:47:17.876206403Z [inf]  ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+2026-09-08T11:47:17.894517174Z [err]  /app/backend/node_modules/sequelize/lib/dialects/abstract/connection-manager.js:57
+2026-09-08T11:47:17.894521414Z [err]        throw err;
+2026-09-08T11:47:17.894522674Z [err]      at Object..js (node:internal/modules/cjs/loader:1913:10) {
+2026-09-08T11:47:17.894525184Z [err]        ^
+2026-09-08T11:47:17.894527984Z [err]  
+2026-09-08T11:47:17.894528454Z [err]    code: 'ERR_DLOPEN_FAILED'
+2026-09-08T11:47:17.894531154Z [err]  Error: /lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.38' not found (required by /app/backend/node_modules/sqlite3/build/Release/node_sqlite3.node)
+2026-09-08T11:47:17.894531944Z [err]  }
+2026-09-08T11:47:17.894533614Z [err]      at Object..node (node:internal/modules/cjs/loader:1939:18)
+2026-09-08T11:47:17.894535384Z [err]  
+2026-09-08T11:47:17.894536394Z [err]      at Module.load (node:internal/modules/cjs/loader:1505:32)
+2026-09-08T11:47:17.894538824Z [err]  Node.js v22.23.2
+2026-09-08T11:47:17.894539484Z [err]      at Function._load (node:internal/modules/cjs/loader:1309:12)
+2026-09-08T11:47:17.894542014Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+2026-09-08T11:47:17.894544254Z [err]      at Module.require (node:internal/modules/cjs/loader:1527:12)
+2026-09-08T11:47:17.894546414Z [err]      at require (node:internal/modules/helpers:147:16)
+2026-09-08T11:47:17.894548534Z [err]      at bindings (/app/backend/node_modules/bindings/bindings.js:112:48)
+2026-09-08T11:47:17.894550714Z [err]      at Object.<anonymous> (/app/backend/node_modules/sqlite3/lib/sqlite3-binding.js:1:37)
+2026-09-08T11:47:17.894554164Z [err]      at Module._compile (node:internal/modules/cjs/loader:1781:14)
+2026-09-08T11:47:18.384901657Z [inf]  ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+2026-09-08T11:47:18.543278528Z [inf]  ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+2026-09-08T11:47:18.562308840Z [err]  /app/backend/node_modules/sequelize/lib/dialects/abstract/connection-manager.js:57
+2026-09-08T11:47:18.562311550Z [err]        throw err;
+2026-09-08T11:47:18.562314260Z [err]        ^
+2026-09-08T11:47:18.562317829Z [err]  
+2026-09-08T11:47:18.562321389Z [err]  Error: /lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.38' not found (required by /app/backend/node_modules/sqlite3/build/Release/node_sqlite3.node)
+2026-09-08T11:47:18.562324469Z [err]      at Object..node (node:internal/modules/cjs/loader:1939:18)
+2026-09-08T11:47:18.562327409Z [err]      at Module.load (node:internal/modules/cjs/loader:1505:32)
+2026-09-08T11:47:18.562330159Z [err]      at Function._load (node:internal/modules/cjs/loader:1309:12)
+2026-09-08T11:47:18.562332659Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+2026-09-08T11:47:18.562335029Z [err]      at Module.require (node:internal/modules/cjs/loader:1527:12)
+2026-09-08T11:47:18.562337409Z [err]      at require (node:internal/modules/helpers:147:16)
+2026-09-08T11:47:18.562340349Z [err]      at bindings (/app/backend/node_modules/bindings/bindings.js:112:48)
+2026-09-08T11:47:18.562343059Z [err]      at Object.<anonymous> (/app/backend/node_modules/sqlite3/lib/sqlite3-binding.js:1:37)
+2026-09-08T11:47:18.562345419Z [err]      at Module._compile (node:internal/modules/cjs/loader:1781:14)
+2026-09-08T11:47:18.562347919Z [err]      at Object..js (node:internal/modules/cjs/loader:1913:10) {
+2026-09-08T11:47:18.562350439Z [err]    code: 'ERR_DLOPEN_FAILED'
+2026-09-08T11:47:18.562352869Z [err]  }
+2026-09-08T11:47:18.562355519Z [err]  
+2026-09-08T11:47:18.562358169Z [err]  Node.js v22.23.2
+2026-09-08T11:47:19.010565831Z [inf]  ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+2026-09-08T11:47:19.214652346Z [inf]  ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+2026-09-08T11:47:19.214655786Z [err]  /app/backend/node_modules/sequelize/lib/dialects/abstract/connection-manager.js:57
+2026-09-08T11:47:19.214665086Z [err]        throw err;
+2026-09-08T11:47:19.214668096Z [err]        ^
+2026-09-08T11:47:19.214671856Z [err]  
+2026-09-08T11:47:19.214675436Z [err]  Error: /lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.38' not found (required by /app/backend/node_modules/sqlite3/build/Release/node_sqlite3.node)
+2026-09-08T11:47:19.214679126Z [err]      at Object..node (node:internal/modules/cjs/loader:1939:18)
+2026-09-08T11:47:19.214683276Z [err]      at Module.load (node:internal/modules/cjs/loader:1505:32)
+2026-09-08T11:47:19.214686856Z [err]      at Function._load (node:internal/modules/cjs/loader:1309:12)
+2026-09-08T11:47:19.214690356Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+2026-09-08T11:47:19.214693706Z [err]      at Module.require (node:internal/modules/cjs/loader:1527:12)
+2026-09-08T11:47:19.214697646Z [err]      at require (node:internal/modules/helpers:147:16)
+2026-09-08T11:47:19.214700986Z [err]      at bindings (/app/backend/node_modules/bindings/bindings.js:112:48)
+2026-09-08T11:47:19.214704546Z [err]      at Object.<anonymous> (/app/backend/node_modules/sqlite3/lib/sqlite3-binding.js:1:37)
+2026-09-08T11:47:19.214708296Z [err]      at Module._compile (node:internal/modules/cjs/loader:1781:14)
+2026-09-08T11:47:19.214711736Z [err]      at Object..js (node:internal/modules/cjs/loader:1913:10) {
+2026-09-08T11:47:19.214715926Z [err]    code: 'ERR_DLOPEN_FAILED'
+2026-09-08T11:47:19.214719076Z [err]  }
+2026-09-08T11:47:19.214722226Z [err]  
+2026-09-08T11:47:19.214725865Z [err]  Node.js v22.23.2
+2026-09-08T11:47:19.707208871Z [inf]  ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+2026-09-08T11:47:19.916875434Z [inf]  ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+2026-09-08T11:47:19.916880194Z [err]  /app/backend/node_modules/sequelize/lib/dialects/abstract/connection-manager.js:57
+2026-09-08T11:47:19.916883174Z [err]        throw err;
+2026-09-08T11:47:19.916886204Z [err]        ^
+2026-09-08T11:47:19.916888844Z [err]  
+2026-09-08T11:47:19.916891744Z [err]  Error: /lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.38' not found (required by /app/backend/node_modules/sqlite3/build/Release/node_sqlite3.node)
+2026-09-08T11:47:19.916894444Z [err]      at Object..node (node:internal/modules/cjs/loader:1939:18)
+2026-09-08T11:47:19.916897024Z [err]      at Module.load (node:internal/modules/cjs/loader:1505:32)
+2026-09-08T11:47:19.916899914Z [err]      at Function._load (node:internal/modules/cjs/loader:1309:12)
+2026-09-08T11:47:19.916902444Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+2026-09-08T11:47:19.916904864Z [err]      at Module.require (node:internal/modules/cjs/loader:1527:12)
+2026-09-08T11:47:19.916907214Z [err]      at require (node:internal/modules/helpers:147:16)
+2026-09-08T11:47:19.916910184Z [err]      at bindings (/app/backend/node_modules/bindings/bindings.js:112:48)
+2026-09-08T11:47:19.916913014Z [err]      at Object.<anonymous> (/app/backend/node_modules/sqlite3/lib/sqlite3-binding.js:1:37)
+2026-09-08T11:47:19.916915974Z [err]      at Module._compile (node:internal/modules/cjs/loader:1781:14)
+2026-09-08T11:47:19.916918874Z [err]      at Object..js (node:internal/modules/cjs/loader:1913:10) {
+2026-09-08T11:47:19.916921614Z [err]    code: 'ERR_DLOPEN_FAILED'
+2026-09-08T11:47:19.916924214Z [err]  }
+2026-09-08T11:47:19.916926964Z [err]  
+2026-09-08T11:47:19.916929354Z [err]  Node.js v22.23.2
+2026-09-08T11:47:20.350404317Z [inf]  ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+2026-09-08T11:47:20.518666169Z [inf]  ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+2026-09-08T11:47:20.518672048Z [err]  /app/backend/node_modules/sequelize/lib/dialects/abstract/connection-manager.js:57
+2026-09-08T11:47:20.518675108Z [err]        throw err;
+2026-09-08T11:47:20.518678548Z [err]        ^
+2026-09-08T11:47:20.518681598Z [err]  
+2026-09-08T11:47:20.518684168Z [err]  Error: /lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.38' not found (required by /app/backend/node_modules/sqlite3/build/Release/node_sqlite3.node)
+2026-09-08T11:47:20.518693088Z [err]      at Object..node (node:internal/modules/cjs/loader:1939:18)
+2026-09-08T11:47:20.518696188Z [err]      at Module.load (node:internal/modules/cjs/loader:1505:32)
+2026-09-08T11:47:20.518699748Z [err]      at Function._load (node:internal/modules/cjs/loader:1309:12)
+2026-09-08T11:47:20.518703118Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+2026-09-08T11:47:20.518706488Z [err]      at Module.require (node:internal/modules/cjs/loader:1527:12)
+2026-09-08T11:47:20.518709698Z [err]      at require (node:internal/modules/helpers:147:16)
+2026-09-08T11:47:20.518713128Z [err]      at bindings (/app/backend/node_modules/bindings/bindings.js:112:48)
+2026-09-08T11:47:20.518716218Z [err]      at Object.<anonymous> (/app/backend/node_modules/sqlite3/lib/sqlite3-binding.js:1:37)
+2026-09-08T11:47:20.518719318Z [err]      at Module._compile (node:internal/modules/cjs/loader:1781:14)
+2026-09-08T11:47:20.518722558Z [err]      at Object..js (node:internal/modules/cjs/loader:1913:10) {
+2026-09-08T11:47:20.518725678Z [err]    code: 'ERR_DLOPEN_FAILED'
+2026-09-08T11:47:20.518728188Z [err]  }
+2026-09-08T11:47:20.518731418Z [err]  
+2026-09-08T11:47:20.518733838Z [err]  Node.js v22.23.2
+2026-09-08T11:47:20.956527555Z [inf]  ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+2026-09-08T11:47:21.114152465Z [inf]  ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+2026-09-08T11:47:21.132444347Z [err]  /app/backend/node_modules/sequelize/lib/dialects/abstract/connection-manager.js:57
+2026-09-08T11:47:21.132454817Z [err]        throw err;
+2026-09-08T11:47:21.132459877Z [err]        ^
+2026-09-08T11:47:21.132464826Z [err]  
+2026-09-08T11:47:21.132468506Z [err]  Error: /lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.38' not found (required by /app/backend/node_modules/sqlite3/build/Release/node_sqlite3.node)
+2026-09-08T11:47:21.132472506Z [err]      at Object..node (node:internal/modules/cjs/loader:1939:18)
+2026-09-08T11:47:21.132475956Z [err]      at Module.load (node:internal/modules/cjs/loader:1505:32)
+2026-09-08T11:47:21.132479236Z [err]      at Function._load (node:internal/modules/cjs/loader:1309:12)
+2026-09-08T11:47:21.132482746Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+2026-09-08T11:47:21.132488126Z [err]      at Module.require (node:internal/modules/cjs/loader:1527:12)
+2026-09-08T11:47:21.132491566Z [err]      at require (node:internal/modules/helpers:147:16)
+2026-09-08T11:47:21.132495146Z [err]      at bindings (/app/backend/node_modules/bindings/bindings.js:112:48)
+2026-09-08T11:47:21.132498306Z [err]      at Object.<anonymous> (/app/backend/node_modules/sqlite3/lib/sqlite3-binding.js:1:37)
+2026-09-08T11:47:21.132501716Z [err]      at Module._compile (node:internal/modules/cjs/loader:1781:14)
+2026-09-08T11:47:21.132505226Z [err]      at Object..js (node:internal/modules/cjs/loader:1913:10) {
+2026-09-08T11:47:21.132508646Z [err]    code: 'ERR_DLOPEN_FAILED'
+2026-09-08T11:47:21.132513336Z [err]  }
+2026-09-08T11:47:21.132517026Z [err]  
+2026-09-08T11:47:21.132520206Z [err]  Node.js v22.23.2
