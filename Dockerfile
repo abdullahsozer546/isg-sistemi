@@ -7,7 +7,8 @@ COPY . .
 
 # Frontend ve Backend kütüphanelerini kur
 RUN npm install --prefix frontend
-RUN npm install --prefix backend
+# Backend kütüphanelerini kurarken sqlite3'ü mecburen sıfırdan derle (GLIBC hatasını çözmek için)
+RUN npm install --build-from-source=sqlite3 --prefix backend
 
 # React (Frontend) projesini derle (Build)
 RUN npm run build --prefix frontend
