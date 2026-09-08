@@ -537,7 +537,7 @@ const frontendPath = path.join(__dirname, '../frontend/dist');
 app.use(express.static(frontendPath));
 
 // API olmayan tüm istekleri React'a (index.html) yönlendir
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
